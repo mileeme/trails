@@ -1,0 +1,15 @@
+{% extends 'events/base.html' %}
+{% block title %}Events{% endblock %}
+
+{% block body %}
+<h1>Events</h1>
+{% if event %}
+<ul>
+    {% for event in event %}
+    <li><a href="{% url 'events:event' event.id %}">{{ event.title }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No events available.</p>
+{% endif %}
+{% endblock body %}

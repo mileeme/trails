@@ -1,0 +1,17 @@
+{% extends 'events/base.html' %}
+
+{% block title %}
+Event
+{% endblock title %}
+
+{% block body %}
+<label for="index"><a href="{% url 'events:index' %}">home</a></label>
+<h1>{{ event.title }}</h1>
+<ul>
+    <li><img src="{{ event.photo.url }}" width="200" alt="{{ event.title }}"/></li>
+    <li>organizer: {{ event.organizer }}</li>
+    <li>date: {{ event.start }}</li>
+    <li>capacity: {{ event.capacity }}</li>
+    <li>venue: {{ event.venue }}</li>
+</ul>
+{% endblock body %}
