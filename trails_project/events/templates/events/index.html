@@ -3,9 +3,9 @@
 
 {% block body %}
 <h1>Events</h1>
-{% if event %}
+{% if events %}
 <ul>
-    {% for event in event %}
+    {% for event in events %}
     <li><a href="{% url 'events:event' event.id %}">{{ event.title }}</a></li>
     {% endfor %}
 </ul>
