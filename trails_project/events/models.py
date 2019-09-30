@@ -65,7 +65,11 @@ class Categorization(models.Model):
 
 
 class Distance(models.Model):
-    events = models.ManyToManyField(Event, related_name='distances')
+    events = models.ManyToManyField(
+        Event,
+        through='EventDistances',
+        through_fields=('event', 'distance'),
+    )
     length = models.DecimalField(max_digits=4, decimal_places=1)
     kilometers = 'km'
     miles = 'mi'
@@ -80,7 +84,7 @@ class Distance(models.Model):
     )
     start_time = models.DateTimeField('start time')
     cutoff_time = models.DateTimeField('cuttoff time')
-    total_capacity = models.IntegerField('capacity', blank=True)
+    total_capacity = models.IntegerField('capacity', blank=True, null=True)
     def __str__(self):
         return f"{self.event.id} {self.length} {self.distance_type}"
 
