@@ -6,8 +6,18 @@ from django.views import generic
 from .models import Event
 from .forms import Organizer
 
-# django's abstraction for displaying a list of objects
+# django's abstration template view
 class IndexView(generic.ListView):
+    template_name = 'events/index.html'
+    context_object_name = 'events'
+
+    def get_queryset(self):
+        """ return list by earliest date """
+        return Event.objects.order_by('start')
+
+
+# django's abstraction for displaying a list of objects
+class SearchResultsView(generic.ListView):
     template_name = 'events/index.html'
     context_object_name = 'events'
 
