@@ -1,0 +1,51 @@
+/* main css for pset5 uses bootstrap */
+
+
+/* header menu */
+
+/* parent div to keep menu bar fixed to the top */
+
+/* style of header and footer menu */
+
+/* style of individual menu links */
+
+/* nav js */
+
+/* main body */
+
+#jumbotron-index {
+    background-image: url('https://imgur.com/JcZ10vy');
+    background-size: cover;
+    padding: 5em inherit;
+    min-height: 250px;
+}
+
+#jumbotron-about {
+    background-image: url('https://i.pinimg.com/564x/57/5e/cb/575ecb77b633ca23e56bded5f433fbca.jpg');
+    background-size: cover;
+    padding: 5em inherit;
+    min-height: 400px;
+}
+
+#jumbotron-about h1 {
+    font-family: "Roboto" sans-serif;
+    color: #182b1f;
+}
+
+#about-custom {
+    background-color: #fff;
+}
+
+#about-custom p {
+    color: #182b1f;
+}
+
+/* random color generator */
+.random-card-bgcolor {
+    background-color: #fff;
+}
+
+/* bootstrap js box-sizing */
+.selector-for-some-widget {
+    box-sizing: content-box;
+}

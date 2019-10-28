@@ -1,44 +1,59 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Organizer, Participant, Event, Categorization, Venue, Distance, Registration
-from .forms import EventDescriptionForm
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from .models import Event, Distance
+# from .forms import EventDescriptionForm
 
 # Register your models here.
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-@admin.register(SubCategory)
-class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('category', 'name')
-
-@admin.register(Organizer)
-class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'web', 'email', 'area_code', 'phone')
-
-@admin.register(Participant)
-class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'gender', 'email')
-
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'organizer', 'start', 'end', 'venue')
-    form = EventDescriptionForm
-
-@admin.register(Categorization)
-class RegisterAdmin(admin.ModelAdmin):
-    list_display = ('subcategory', 'event')
-
-@admin.register(Venue)
-class VenueAdmin(admin.ModelAdmin):
-    list_display = ('name', 'city', 'state')
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ('name',)
+#
+# @admin.register(SubCategory)
+# class SubCategoryAdmin(admin.ModelAdmin):
+#     list_display = ('category', 'name',)
+#
+# @admin.register(Organizer)
+# class OrganizerAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'web', 'email', 'area_code', 'phone',)
+#
+# @admin.register(Venue)
+# class VenueAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'city', 'state',)
 
 @admin.register(Distance)
 class DistanceAdmin(admin.ModelAdmin):
-    list_display = ('get_event', 'length', 'distance_type', 'total_capacity')
-    def get_event(self, obj):
-        return obj.event.title
-    get_event.title = 'event_title'
+    list_display = ('length', 'distance_type',)
+    # def get_event(self, obj):
+    #     return obj.event.title
+    # get_event.title = 'event_title'
 
-@admin.register(Registration)
-class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('date',)
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date', 'city', 'state',)
+    filter_horizontal = ('distance',)
+    # form = EventDescriptionForm
+
+# @admin.register(EventDistanceM2M)
+# class EventDistanceAdmin(admin.ModelAdmin):
+#     list_display = ('event', 'distance')
+
+# @admin.register(SubCatEventM2M)
+# class SubCatEventM2MAdmin(admin.ModelAdmin):
+#     list_display = ('subcategory', 'event',)
+#
+# @admin.register(EventDistanceM2M)
+# class EventDistanceM2MAdmin(admin.ModelAdmin):
+#     list_display = ('distance', 'event',)
+#
+# @admin.register(DistanceDetail)
+# class DistanceDetailAdmin(admin.ModelAdmin):
+#     lsit_display = ('event', 'distance', 'total_capacity',)
+# # @admin.register(Participant)
+# # class ParticipantAdmin(admin.ModelAdmin):
+# #     list_display = ('first_name', 'last_name', 'gender', 'email')
+#
+# @admin.register(Registration)
+# class RegistrationAdmin(admin.ModelAdmin):
+#     # distance = Distance.objects.get('length')
+#     # distance_type = Distance.objects.get('distance_type')
+#     list_display = ('distance_detail', 'date', 'price',)

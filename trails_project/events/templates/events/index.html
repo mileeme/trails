@@ -1,15 +1,126 @@
 {% extends 'events/base.html' %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+
 {% block title %}Events{% endblock %}
 
 {% block body %}
-<h1>Events</h1>
-{% if events %}
-<ul>
-    {% for event in events %}
-    <li><a href="{% url 'events:event' event.id %}">{{ event.title }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No events available.</p>
-{% endif %}
-{% endblock body %}
+<!-- jumbotron -->
+
+<div class="jumbotron jumbotron-fluid" id="jumbotron-index" style="background-image: url({% static 'events/trails_topography.jpg' %});">
+    <!-- title field -->
+    <div class="container">
+        <form action="{% url 'events:search' %}" method="get">
+            <div class="form-row">
+                <div class="form-group col-md-12"><h4 for="{{ filter.form.title.label }}">Explore California trails, one run at a time</h4></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <!-- {% render_field filter.form.keyword_lookup class="form-control form-control-lg" placeholder="search by keywords" name="{{ filter.form.keyword_lookup.label }}" %} -->
+                    {{ filter.form.keyword_lookup|attr:"autofocus"|add_class:"form-control form-control-log"|attr:"placeholder:search by keyword"|attr:"name:filter.form.keyword_lookup.label"}}
+                </div>
+            </div>
+
+                <fieldset class="form-group">
+
+                    <!-- date range field -->
+                    <div class="btn-group">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Date</button>
+                        <div class="dropdown-menu">
+                            <div class="form-group">
+                               <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <!-- {% render_field filter.form.date class="form-control datetimepicker-input" data-target="#datetimepicker1" autocomplete="off" placeholder="YYYY-MM-DD" %} -->
+                                    {{ filter.form.date|attr:"data-target:#datetimepicker1"|attr:"autocomplete:off"|attr:"placeholder:YYYY-MM-DD"|add_class:"form-control datetimepicker-input"}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- distance field -->
+                    <div class="btn-group">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Distance</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item col">
+                                {% render_field filter.form.distance__length class="form-check-input selector-for-some-widget" %}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- start of column content -->
+<div class="container">
+    <h5>Upcoming marathons</h5>
+    <div class="row">
+        <!-- iterate through events -->
+        {% if filter.qs %}
+        {% for event in filter.qs %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4" onclick="location.href='{% url 'events:event' event.id %}';" style="cursor: pointer;">
+            <!-- card -->
+            <div class="card mb-3 rounded-0 h-100">
+                <div class="card-body text-dark rounded-0" id="random-bgcolor">
+                    <small>{{ event.city }}, {{ event.state }}</small>
+                    <a class="card-link text-dark" href="{% url 'events:event' event.id %}"><h5 class="card-title">{{ event.title }}</h5></a>
+                </div>
+                <div class="card-footer bg-white rounded-0">
+                    <small class="card-text">{{ event.date }}</small>
+                    <p class="card-text">
+                        {% for distance in event.distance.all %}{% if not forloop.first %}, {% endif %}{{ distance.length }}{% endfor %} miles</p>
+                </div>
+            </div>
+
+            <!-- <div class="card h-100">
+                <a class="card-link" href="{% url 'events:event' event.id %}"><img class="card-img-top" src="https://i.pinimg.com/564x/7a/b9/27/7ab927727a57e35323ba8de042326500.jpg" alt="{{ event.title }}"></a>
+                <div class="card-body">
+                    <a class="card-link" href="{% url 'events:event' event.id %}"><h6 class="card-title">{{ event.title }}</h6></a>
+                    <small class="text-muted">{{ event.date }}</small>
+                    <br />
+                    <small class="text-muted">{{ event.city }}, {{ event.state }}</small>
+                    <p class="card-text">{% for distance in event.distance.all %}{% if not forloop.first %}, {% endif %}{{ distance.length }}{% endfor %} miles</p>
+                    <a href="{% url 'events:event' event.id %}" class="btn btn-outline-secondary" role="button">Learn more</a>
+                </div>
+            </div> -->
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-6 col-md-6">
+            <p>No events available.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<!-- datepicker js -->
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            // https://momentjs.com/docs/#/displaying/format/
+            format: 'YYYY-MM-DD'
+        });
+    });
+</script>
+
+
+<!-- date range field -->
+<!-- <div class="btn-group">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Date range</button>
+    <div class="dropdown-menu">
+        <div class="dropdown-item col">
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                {% render_field filter.form.date_start class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="year/mm/dd" %}
+                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+            {% render_field filter.form.date_end class="form-control" placeholder="year/mm/dd" %}
+        </div>
+    </div>
+</div> -->
+
+{% endblock %}

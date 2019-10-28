@@ -5,13 +5,80 @@ Event
 {% endblock title %}
 
 {% block body %}
-<label for="index"><a href="{% url 'events:index' %}">home</a></label>
-<h1>{{ event.title }}</h1>
-<ul>
-    <li><img src="{{ event.photo.url }}" width="200" alt="{{ event.title }}"/></li>
-    <li>organizer: {{ event.organizer }}</li>
-    <li>date: {{ event.start }}</li>
-    <li>capacity: {{ event.capacity }}</li>
-    <li>venue: {{ event.venue }}</li>
-</ul>
+<!-- slide -->
+{% if event.photo %}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+       <ol class="carousel-indicators">
+           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+       </ol>
+       <div class="carousel-inner">
+           <div class="carousel-item active">
+                <img src="{{ event.photo.url }}" class="d-block w-100" alt="{{ event.title }}">
+           </div>
+       </div>
+       {% if photo in event.photo.all > 1 %}
+       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+           <span class="sr-only">Previous</span>
+       </a>
+       <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+           <span class="sr-only">Next</span>
+       </a>
+       {% else %}
+       {% endif %}
+    </div>
+{% endif %}
+
+<!-- start of content -->
+<div class="container pb-5">
+
+    <!-- start breadcrumb -->
+    <div class="row pt-4">
+        <div class="col-12 pb-1">
+            <label for="index"><small class="text-muted"><a  class="text-secondary" href="{% url 'events:index' %}">All events</a> / Event</small></label>
+        </div>
+
+        <div class="col-12">
+            <h1>{{ event.title }}</h1>
+        </div>
+    </div>
+
+    <!-- start specs -->
+    <div class="row my-4">
+        <div class="col-12 col-md-4">
+            <p class="text-muted">{{ event.city }}, {{ event.state }}</p>
+            <p class="text-muted"><a href="{{ event.web }}" target="_blank">{{ event.web }}</a></p>
+        </div>
+        <div class="col-12 col-md-8">
+            <p>date: {{ event.date }}</p>
+            <p>distance: {% for distance in event.distance.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}{{ distance }}{% endfor %}</p>
+        </div>
+    </div>
+    <hr class="w-100">
+
+
+
+    <!-- start description -->
+    <div class="row my-4">
+      <div class="col-12 col-md-4">
+        <h5>Description</h5>
+      </div>
+      <div class="col-12 col-md-8">
+        <p>We welcome you to the Swiss Alps 100 trail race, where you will experience some of the finest trails and views of the famous Swiss Alps mountains. Our courses are incredibly scenic, yet strenuous and challenging. Some parts of the course, like the 1'128 meter (3,700ft) climb to the Breithorn in the only 10.3km (6.4 miles), will test each runner with terrain and surroundings that are truly magnificent. Make your summer special and come run the Swiss Alps 100 trail race.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- start of footer -->
+  <footer>
+    <div class="container">
+      <div class="col-12 d-flex justify-content-end fixed-bottom bg-light p-3">
+        <div class="align-self-center">
+            <a class="btn btn-primary" role="button" target="_blank" href="{{ event.register }}">Register for event</a>
+        </div>
+    </div>
+    </div>
+  </footer>
+
 {% endblock body %}

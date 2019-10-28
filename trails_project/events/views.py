@@ -4,31 +4,34 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Event
-from .forms import Organizer
+from .filters import EventFilter
+# from .forms import Organizer
 
-# django's abstration template view
-class IndexView(generic.ListView):
+# events queryset dynamic filter
+def index(request):
+    event_list = Event.objects.all()
+    event_filter = EventFilter(request.GET, queryset=event_list)
     template_name = 'events/index.html'
-    context_object_name = 'events'
-
-    def get_queryset(self):
-        """ return list by earliest date """
-        return Event.objects.order_by('start')
+    return render(request, template_name, {'filter': event_filter})
 
 
-# django's abstraction for displaying a list of objects
-class SearchResultsView(generic.ListView):
-    template_name = 'events/index.html'
-    context_object_name = 'events'
+# django's queryset dynamic filter
+def search(request):
+    event_list = Event.objects.all().distinct()
+    event_filter = EventFilter(request.GET, queryset=event_list)
+    template_name = 'events/search.html'
+    return render(request, template_name, {'filter': event_filter})
 
-    def get_queryset(self):
-        """ return list by earliest date """
-        return Event.objects.order_by('start')
-    # event = Event.objects.all()
-    # context = {
-    #     'event': event
-    # }
-    # return render(request, 'events/index.html', context)
+
+# django's abstration for display a list of objects
+# class IndexView(generic.ListView):
+#     template_name = 'events/index.html'
+#     context_object_name = 'events'
+#
+#     def get_queryset(self, request):
+#         """ return list by earliest date """
+#         return Event.objects.order_by('start')
+
 
 # display a detail page for a particular type of object
 class EventView(generic.DetailView):
