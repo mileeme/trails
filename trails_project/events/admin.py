@@ -1,9 +1,44 @@
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from .models import Event, Distance
-# from .forms import EventDescriptionForm
+from .models import Distance, Organizer, SubCategory, EventPhoto, Event, EventDistanceM2M, SubCatEventM2M
+from .forms import EventDetailForm
 
-# Register your models here.
+
+# Registered models
+@admin.register(Distance)
+class DistanceAdmin(admin.ModelAdmin):
+    list_display = ('length', 'distance_type',)
+    # def get_event(self, obj):
+    #     return obj.event.title
+    # get_event.title = 'event_title'
+
+@admin.register(Organizer)
+class OrganizerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'web')
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+@admin.register(EventPhoto)
+class EventPhotoAdmin(admin.ModelAdmin):
+    list_display = ('event', 'photo',)
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date', 'city', 'state',)
+    filter_horizontal = ('distance',)
+    form = EventDetailForm
+
+@admin.register(EventDistanceM2M)
+class EventDistanceM2MAdmin(admin.ModelAdmin):
+    list_display = ('distance', 'event')
+
+@admin.register(SubCatEventM2M)
+class SubCatEventM2MAdmin(admin.ModelAdmin):
+    list_display = ('subcategory', 'event')
+
+
 # @admin.register(Category)
 # class CategoryAdmin(admin.ModelAdmin):
 #     list_display = ('name',)
@@ -19,19 +54,6 @@ from .models import Event, Distance
 # @admin.register(Venue)
 # class VenueAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'city', 'state',)
-
-@admin.register(Distance)
-class DistanceAdmin(admin.ModelAdmin):
-    list_display = ('length', 'distance_type',)
-    # def get_event(self, obj):
-    #     return obj.event.title
-    # get_event.title = 'event_title'
-
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date', 'city', 'state',)
-    filter_horizontal = ('distance',)
-    # form = EventDescriptionForm
 
 # @admin.register(EventDistanceM2M)
 # class EventDistanceAdmin(admin.ModelAdmin):

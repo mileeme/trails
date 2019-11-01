@@ -39,12 +39,20 @@
     color: #182b1f;
 }
 
-/* random color generator */
+/* random color generator for querysets on index/search page */
 .random-card-bgcolor {
     background-color: #fff;
 }
 
-/* bootstrap js box-sizing */
+/* bootstrap js box-sizing for drop-down button */
 .selector-for-some-widget {
     box-sizing: content-box;
+}
+
+/* bootstrap dropdown menu */
+@media (max-width: 767.98px) {
+    #subcategoryDropdown {
+        right: 0;
+        left: auto;
+    }
 }
