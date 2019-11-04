@@ -9,9 +9,7 @@ from tempus_dominus.widgets import DatePicker
 
 
 class EventFilter(django_filters.FilterSet):
-    # keyword_lookup = django_filters.CharFilter(method='lookup_multi_fields', label='search by keyword')
-
-    # search multiple model fields of queryset via single input field
+# search multiple model fields of queryset via single input field
     ex = django_filters.CharFilter(label='ex filter', method='filter_ex')
     search_fields = ['title', 'distance__length', 'subcategory__name', 'city',]
 
@@ -99,22 +97,7 @@ class EventFilter(django_filters.FilterSet):
         lookup_expr='exact',
         widget=forms.CheckboxSelectMultiple
     )
-    
+
     class Meta:
         model = Event
         fields = ['ex', 'start', 'end', 'distance__length', 'subcategory__name',]
-
-
-    # to query multiple fields in model
-    # def lookup_multi_fields(self, queryset, name, value):
-    #     return queryset.filter(
-    #         Q(title__icontains=value) | Q(city__icontains=value) | Q(distance__length__icontains=value), Q(distance__distance_type__icontains=value)
-    #     )
-
-# class EventFilter(django_filters.FilterSet):
-#     title = django_filters.CharFilter(lookup_expr='icontains')
-#     start = django_filters.DateFilter(lookup_expr='gte')
-#     end = django_filters.DateFilter(lookup_expr='lte')
-#     class Meta:
-#         model = Event
-#         fields = ['title', 'start', 'end', 'subcategory', 'distance']

@@ -1,44 +1,11 @@
 # CS50 Final Project
-Cal Trails is a platform for people to discover, learn and participate in outdoor running activities.
-
-## Getting started
-instructions will get copy of the project up and running on local machine for development and testing purposes
-
-#### Prerequisites
-what things you need to install the software and how to install them
-```
-give example
-```
-and repeat
-```
-until finished
-```
-end with example of getting some data out of the system or using it for little demo
-
-## running the tests
-explain how to run automated tests for this system
-
-#### break down into end to end tests
-explain what these tests test and why
-```
-give example
-```
-#### and coding style tests
-explain what these tests test and why
-```
-give example
-```
-
-## Deployment
-add additional notes about how to deploy this on a live system
+Trails is a platform for people to discover, learn and participate in outdoor running activities. Event data is pulled from online sources (currently, testing only within CA) via an opensource web crawler than imported into Postgresql.
 
 ## Built with
-* [Django](#): Python framework used
-* [Postgresql](#): Database used
-
-## Contributing
-
-## Versioning
+* [Django](https://docs.djangoproject.com/en/2.2/): Python framework
+* [Python](https://www.python.org/): Python 3.8
+* [Postgresql](https://www.postgresql.org/): Database
+* [Bootstrap](https://getbootstrap.com/): Opensource toolkit for HTML, CSS and JS
 
 ## Authors
 * Milee Yu
