@@ -1,6 +1,8 @@
 # CS50 Final Project
 Trails is a platform for people to discover, learn and participate in outdoor running activities. Event data is pulled from online sources (currently, testing only within CA) via an opensource web crawler than imported into Postgresql.
 
+[website]()
+
 ## Built with
 * [Django](https://docs.djangoproject.com/en/2.2/): Python framework
 * [Python](https://www.python.org/): Python 3.8
