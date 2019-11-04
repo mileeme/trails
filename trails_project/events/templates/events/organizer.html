@@ -20,7 +20,7 @@ Organizer
             <h2>{{ organizer.name }}</h2>
         </div>
         <div class="col-12">
-            <p><i class="fas fa-link"></i>&emsp;<a href="{{ event.organizer.web }}" target="_blank">{{ organizer.web }}</a></p>
+            <p><i class="fas fa-link"></i>&emsp;<a href="{{ organizer.web }}" target="_blank">{{ organizer.web }}</a></p>
         </div>
     </div>
     <hr class="h-100">
@@ -60,12 +60,12 @@ Organizer
     <!-- past organizer events -->
     {% if past %}
     <hr class="h-100">
-    <div class="row">
+
         <!-- iterate through events -->
-        <h5 class="pb-1">Past events</h5>
-    </div>
+    <h5 class="pb-1">Past events</h5>
+
     <div class="row">
-        {% for past in past %}
+        {% for event in past %}
         <div class="col-6 col-md-4 col-lg-3 mb-4" onclick="location.href='{% url 'events:event' event.id %}';" style="cursor: pointer;">
             <!-- card -->
             <div class="card mb-3 rounded-1 h-100">
@@ -85,7 +85,7 @@ Organizer
             </div>
         </div>
         {% endfor %}
-        {% endif %}
     </div>
+    {% endif %}
 
 {% endblock body %}
