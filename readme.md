@@ -5,7 +5,7 @@ Trails is a platform for people to discover, learn and participate in outdoor ru
 * [Django](https://docs.djangoproject.com/en/2.2/): Python framework
 * [Python](https://www.python.org/): Python 3.8
 * [Postgresql](https://www.postgresql.org/): Database
-* [Bootstrap] (https://getbootstrap.com/): Opensource toolkit for HTML, CSS and JS
+* [Bootstrap](https://getbootstrap.com/): Opensource toolkit for HTML, CSS and JS
 
 ## Authors
 * Milee Yu
