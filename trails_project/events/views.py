@@ -24,22 +24,19 @@ def search(request):
 
 # queryset for event page
 def event(request, event_id):
-    try:
-        event = get_object_or_404(Event, pk=event_id)
-        photo = EventPhoto.objects.filter(event_id=event_id)
-        subcategory = event.subcategory.all()
-        weekday = event.date.strftime('%A')
-        similar = []
-        template_name = 'events/event.html'
-        context = {
-            'event': event,
-            'photo': photo,
-            'subcategory': subcategory,
-            'similar': similar,
-            'weekday': weekday
-        }
-    except EventPhoto.DoesNotExist:
-        return render(request, 'events/event.html', {'event': event})
+    event = get_object_or_404(Event, pk=event_id)
+    photo = EventPhoto.objects.filter(event_id=event_id)
+    subcategory = event.subcategory.all()
+    weekday = event.date.strftime('%A')
+    similar = []
+    template_name = 'events/event.html'
+    context = {
+        'event': event,
+        'photo': photo,
+        'subcategory': subcategory,
+        'similar': similar,
+        'weekday': weekday
+    }
     return render(request, template_name, context)
 
 # queryset for organizer page
