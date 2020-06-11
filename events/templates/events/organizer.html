@@ -1,0 +1,91 @@
+{% extends 'events/base.html' %}
+
+{% block title %}
+Organizer
+{% endblock title %}
+
+{% block body %}
+
+<!-- start of content -->
+<div class="container">
+    <!-- start breadcrumb -->
+    <div class="row">
+        <div class="col-12 py-1">
+            <label for="index"><small class="text-muted"><a  class="text-secondary" href="{% url 'events:index' %}">running events</a> / organizer</small></label>
+        </div>
+    </div>
+    <!-- organizer name -->
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ organizer.name }}</h2>
+        </div>
+        <div class="col-12">
+            <p><i class="fas fa-link"></i>&emsp;<a href="{{ organizer.web }}" target="_blank">{{ organizer.web }}</a></p>
+        </div>
+    </div>
+    <hr class="h-100">
+
+    <!-- current organizer events -->
+    <h5 class="pb-1">Current events</h5>
+    <div class="row">
+        <!-- iterate through events -->
+        {% if event %}
+        {% for event in event %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4" onclick="location.href='{% url 'events:event' event.id %}';" style="cursor: pointer;">
+            <!-- card -->
+            <div class="card mb-3 rounded-1 h-100">
+                <div class="card-body text-dark rounded-1" id="random-bgcolor">
+                    <small>{{ event.city }}, {{ event.state }}</small>
+                    <a class="card-link text-dark" href="{% url 'events:event' event.id %}"><h5 class="card-title">{{ event.title }}</h5></a>
+                </div>
+                <div class="card-footer bg-white rounded-1">
+                    <small class="card-text">{{ event.date }}</small>
+                    {% if event.distance.all %}
+                    <p class="card-text">
+                        {% for distance in event.distance.all %}{% if not forloop.first %}, {% endif %}{{ distance.length }}{% endfor %} mi</p>
+                    {% else %}
+                    <p class="card-text text-white">.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-6 col-md-6">
+            <p>No events available.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- past organizer events -->
+    {% if past %}
+    <hr class="h-100">
+
+        <!-- iterate through events -->
+    <h5 class="pb-1">Past events</h5>
+
+    <div class="row">
+        {% for event in past %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4" onclick="location.href='{% url 'events:event' event.id %}';" style="cursor: pointer;">
+            <!-- card -->
+            <div class="card mb-3 rounded-1 h-100">
+                <div class="card-body text-dark rounded-1" id="random-bgcolor">
+                    <small>{{ event.city }}, {{ event.state }}</small>
+                    <a class="card-link text-dark" href="{% url 'events:event' event.id %}"><h5 class="card-title">{{ event.title }}</h5></a>
+                </div>
+                <div class="card-footer bg-white rounded-1">
+                    <small class="card-text">{{ event.date }}</small>
+                    {% if event.distance.all %}
+                    <p class="card-text">
+                        {% for distance in event.distance.all %}{% if not forloop.first %}, {% endif %}{{ distance.length }}{% endfor %} mi</p>
+                    {% else %}
+                    <p class="card-text text-white">.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock body %}

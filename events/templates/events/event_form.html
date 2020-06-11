@@ -1,0 +1,14 @@
+{% extends 'events/base.html' %}
+
+{% block title %}Event Form{% endblock %}
+
+{% block body %}
+<h1>Event Form</h1>
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<form action="{% url 'events:form' %}" method="post">
+    {% csrf_token %}
+<input type="submit">
+</form>
+{% endblock body %}

@@ -1,0 +1,41 @@
+{% extends 'events/base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block body %}
+
+<!-- start of column content -->
+<div class="container">
+    <!-- start breadcrumb -->
+    <div class="pb-1">
+        <label for="index"><a href="{% url 'events:index' %}"></a></label>
+    </div>
+
+    <h5>Search results</h5>
+    <div class="row">
+        <!-- Search results -->
+        {% if filter.qs %}
+        {% for event in filter.qs %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4" onclick="location.href='{% url 'events:event' event.id %}';" style="cursor: pointer;">
+            <!-- card -->
+            <div class="card mb-3 rounded-1 h-100">
+                <div class="card-body text-dark rounded-1" id="random-bgcolor">
+                    <small>{{ event.city }}, {{ event.state }}</small>
+                    <a class="card-link text-dark" href="{% url 'events:event' event.id %}"><h5 class="card-title">{{ event.title }}</h5></a>
+                </div>
+                <div class="card-footer bg-white rounded-1">
+                    <small class="card-text">{{ event.date }}</small>
+                    <p class="card-text">{% for distance in event.distance.all %}{% if not forloop.first %}, {% endif %}{{ distance.length }}{% endfor %} miles</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-6 col-md-6">
+            <p>No events available.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
